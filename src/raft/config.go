@@ -8,24 +8,20 @@ package raft
 // test with the original before submitting.
 //
 
-import (
-	"bytes"
-	"log"
-	"math/rand"
-	"runtime"
-	"sync"
-	"sync/atomic"
-	"testing"
-
-	"6.5840/labgob"
-	"6.5840/labrpc"
-
-	crand "crypto/rand"
-	"encoding/base64"
-	"fmt"
-	"math/big"
-	"time"
-)
+import "6.5840/labgob"
+import "6.5840/labrpc"
+import "bytes"
+import "log"
+import "sync"
+import "sync/atomic"
+import "testing"
+import "runtime"
+import "math/rand"
+import crand "crypto/rand"
+import "math/big"
+import "encoding/base64"
+import "time"
+import "fmt"
 
 func randstring(n int) string {
 	b := make([]byte, 2*n)
@@ -437,7 +433,6 @@ func (cfg *config) checkOneLeader() int {
 			if cfg.connected[i] {
 				if term, leader := cfg.rafts[i].GetState(); leader {
 					leaders[term] = append(leaders[term], i)
-					// fmt.Printf("Term %d leader is %d\n", term, i)
 				}
 			}
 		}
@@ -451,7 +446,7 @@ func (cfg *config) checkOneLeader() int {
 				lastTermWithLeader = term
 			}
 		}
-		// fmt.Printf("last term is %d\n", lastTermWithLeader)
+
 		if len(leaders) != 0 {
 			return leaders[lastTermWithLeader][0]
 		}
@@ -469,8 +464,6 @@ func (cfg *config) checkTerms() int {
 			if term == -1 {
 				term = xterm
 			} else if term != xterm {
-				fmt.Printf("term is: %d\n", term)
-				fmt.Printf("Server %d term is %d\n", i, xterm)
 				cfg.t.Fatalf("servers disagree on term")
 			}
 		}
